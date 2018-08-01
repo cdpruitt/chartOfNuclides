@@ -1,0 +1,4 @@
+18.8-47.7 [Carlson et al]
+20.9-43.2 [Slaus et al]
+65.5 [Ingemarsson et al]
+138 [Taylor and Wood]
