@@ -1,0 +1,7 @@
+10.34-21.59 [Dicello and Igo]
+24.9-48 [Carlson et al]
+28.5-28.5 [Turner et al]
+65.5-65.5 [Ingemarsson et al]
+81-180 [Auce et al]
+99.3-99.3 [Kirkby and Link]
+179.6-179.6 [Johansson et al]

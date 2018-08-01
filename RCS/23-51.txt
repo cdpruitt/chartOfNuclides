@@ -1,0 +1,5 @@
+8.8-8.8 [Bulman et al]
+10.0-10.0 [Wilkins and Igo]
+20.8-47.8 [McCamis et al]
+60.8-60.8 [Menet et al]
+99.1-99.1 [Kirkby and Link]
