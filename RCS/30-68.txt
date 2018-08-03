@@ -1,0 +1,4 @@
+14.5-14.5 [Dicello et al]
+22.2-48.1 [Davison et al]
+40-40 [Menet et al]
+60-60 [Menet et al]

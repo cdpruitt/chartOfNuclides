@@ -1,0 +1,3 @@
+9.3-10.8 [Bearpark et al]
+99.3-99.3 [Kirkby and Link]
+179.6-179.6 [Johansson et al]

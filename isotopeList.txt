@@ -26,7 +26,7 @@ Manganese   55
 Iron    54, 56, 57, 58
 Cobalt  59
 Nickel  58, 60, 61, 62, 64
-Copper  63, 65
+Copper  63, 64, 65
 Zinc    64, 66, 67, 68, 70
 Gallium 69, 71
 Germanium   70, 72, 73, 74, 76

@@ -1,0 +1,5 @@
+21.1-48 [Carlson et al]
+28.5 [Turner et al]
+30-60.8 [Menet et al]
+65.5-65.5 [Ingemarsson et al]
+81-180 [Auce et al]

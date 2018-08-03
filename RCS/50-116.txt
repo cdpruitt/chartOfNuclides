@@ -1,0 +1,4 @@
+14.5-14.5 [Dicello et al]
+22.8-47.9 [Carlson et al]
+60.8-60.8 [Menet et al]
+65.5-65.5 [Ingemarsson et al]

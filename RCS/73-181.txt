@@ -1,0 +1,3 @@
+10.0-10.2 [Wilkins and Igo]
+19.8-47.4 [Abegg et al]
+98.3-98.3 [Kirkby and Link]

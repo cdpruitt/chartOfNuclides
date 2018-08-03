@@ -1,0 +1,7 @@
+9.9-10.1 [Wilkins and Igo]
+10.1-10.1 [Bearpark et al]
+15.8-15.8 [Hojvat and Jones]
+20-47.5 [Abegg et al]
+29-29 [Makino et al]
+99.4-99.4 [Kirkby and Link]
+179.6-179.6 [Johansson et al]
