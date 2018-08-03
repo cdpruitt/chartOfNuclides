@@ -1,8 +1,15 @@
 import math
 import svgwrite
 
-lowEThreshold = 1
-highEThreshold = 300
+lowEThreshold = 8
+highEThreshold = 200
+
+energyBins = []
+
+for i in range(0,11):
+    logE = math.log(lowEThreshold)\
+            +(i/10.0)*(math.log(highEThreshold)-math.log(lowEThreshold))
+    energyBins.append(math.exp(logE))
 
 def mergeRanges(newRange, rangeList):
     if not newRange:
@@ -19,29 +26,75 @@ def mergeRanges(newRange, rangeList):
     return rangeList
 
 def getCSFraction(Z, A):
-    crossSectionFile = open('crossSections/' + str(Z) + '-' + str(A) + '.txt')
+    try:
+        crossSectionFile = open('RCS/' + str(Z) + '-' + str(A) + '.txt')
+    except IOError as e:
+        print "Skipping Z=" + str(Z) + ", A=" + str(A)
+        return 0
 
     totalFraction = 0
-    totalRange = []
+    CSBins = [0]*10
 
     for line in crossSectionFile:
         energyRange = line.split(' ')[0]
-        energyRange = (float(energyRange.split('-')[0]), float(energyRange.split('-')[1]))
+        try:
+            energyRange = (float(energyRange.split('-')[0]), float(energyRange.split('-')[1]))
+        except IndexError as indexError:
+            print "Error: encountered index error at Z=" + str(Z) + ", A = " + str(A)
+            continue
+        except ValueError as valueError:
+            print "Error: could not parse " + str(energyRange) + " into floats."
+            continue
 
-#        if((Z==20) and (A==48)):
+        # check to make sure that the lowest energy bin is not larger than the range we want to plot, and
+        # that the high energy bin is not lower than the range we want to plot
+        if(energyRange[0] > energyBins[-1] or energyRange[1] < energyBins[0]):
+            print "At Z=" + str(Z) + ", A=" + str(A) + ", skipping line with energy range "
+            print str(energyRange[0]) + "-" + str(energyRange[1])
+            continue
+        
+        if(energyRange[0]==energyRange[1]):
+            #print str(energyRange[0])
+            # single data point - update the CSBins to be 1 in the appropriate energy range
+            for index in range(0,len(CSBins)):
+                if(energyRange[0] >= energyBins[index] and energyRange[0] <= energyBins[index+1]):
+                    #print "found match in " + str(energyBins[index]) + "-" + str(energyBins[index+1])
+                    CSBins[index] = 1
+                    #print CSBins
+        else:
+            # multiple data points - update all CSBins in-between the lowest and highest energies to be 1
+            #print str(energyRange[0]) + "-" + str(energyRange[1])
 
-        totalRange = mergeRanges(energyRange, totalRange)
+            for index, energyBin in enumerate(energyBins):
+                if(energyRange[0] <= energyBin):
+                    lowBin = index-1
+                    if(lowBin<0):
+                        lowBin=0
+                    break
 
-    if totalRange:
-        for subRange in totalRange:
-            fractionOfRange = math.log(subRange[1])-math.log(subRange[0])
-            totalFraction += fractionOfRange
+            for index, energyBin in enumerate(energyBins):
+                if(energyRange[1] > energyBin):
+                    highBin = index
+                    if(highBin>len(CSBins)):
+                        highBin=len(CSBins)
 
-    totalFraction /= math.log(highEThreshold)-math.log(lowEThreshold)
-    return min(totalFraction, 1)
+            for index in range(lowBin, highBin):
+                #print "found match in " + str(energyBins[lowBin]) + "-" + str(energyBins[highBin])
+                CSBins[index] = 1
+                #print CSBins
+
+    totalFraction = 0
+    for CSBin in CSBins:
+        totalFraction += CSBin
+
+    if (totalFraction<0):
+        print "Error: calculated total fraction <0. Returning 0 for Z=" + str(Z) + ", A=" + str(A)
+        return 0
+
+    #print str(totalFraction/10.0)
+    return totalFraction/10.0
 
 isotopeFile = open('isotopeList.txt','r')
-
 isotopeList = []
 
 charge = 0
@@ -59,7 +112,7 @@ for line in isotopeFile:
 
 boxSize = 50
 
-drawing = svgwrite.Drawing(filename='chartOfNuclides_template.svg')
+drawing = svgwrite.Drawing(filename='RCSChart.svg')
 
 maxN = int(isotopeList[-1][1]) - int(isotopeList[-1][0])
 maxZ = int(isotopeList[-1][0])
@@ -117,7 +170,7 @@ for index, magicNumber in enumerate(magicNumbersN):
         Yposition += 68*boxSize
 
     magicRectangle = drawing.rect(
-            insert=(Xposition, Yposition),
+            insert=(Xposition,Yposition),
             size=(boxSize,sizeN[index]*boxSize),
             stroke='black',
             stroke_width=0)

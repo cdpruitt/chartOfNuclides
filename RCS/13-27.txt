@@ -2,7 +2,7 @@
 8.9-10.4 [Bearpark et al]
 9.9-10.1 [Wilkins and Igo]
 15.0-17.0 [Okumura et al]
-16.4 [Pollock and Schrank]
+16.4-16.4 [Pollock and Schrank]
 24.8-46.3 [McGill et al]
 34-34 [Gooding]
 60-60 [Menet et al]
